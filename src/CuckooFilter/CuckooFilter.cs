@@ -1,30 +1,41 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Cryptography;
 
 namespace CuckooFilter
 {
     public class CuckooFilter
     {
-        private int _bucketCapacity = 4;
-        private int _fingerprintSize = 3;
-        private int _filterSize = (1 << 18) / 4;
-        private int _kicks = 500;
-        private int _count;
-        private Bucket[] _buckets;
-        private HashAlgorithm _hashFunction = SHA1.Create();
+        private readonly uint _bucketCapacity;
+        private readonly uint _fingerprintSize;
+        private readonly uint _filterSize;
+        private readonly uint _kicks;
+        private uint _count;
+        private readonly Bucket[] _buckets;
+        private readonly HashAlgorithm _hashAlgorithm;
 
-        public CuckooFilter()
+        public CuckooFilter() : this(new CuckooFilterOptions())
         {
+        }
+
+        public CuckooFilter(CuckooFilterOptions options)
+        {
+            _bucketCapacity = options.BucketCapacity;
+            _fingerprintSize = options.FingerprintSize;
+            _filterSize = options.FilterSize;
+            _kicks = options.MaximumKicks;
+            _hashAlgorithm = options.HashAlgorithm;
+
             _buckets = new Bucket[_filterSize];
 
             for (int i = 0; i < _filterSize; i++)
                 _buckets[i] = new Bucket(_bucketCapacity);
         }
 
-        public bool Add(byte[] item)
+        public bool Insert(byte[] item)
         {
             var hashedItem = ComputeHash(item);
-            var fingerprint = Fingerprint(hashedItem);
+            var fingerprint = ExtractFingerprint(hashedItem);
             var i = GetIndex(hashedItem);
             var j = GetAlternateIndex(i, fingerprint);
 
@@ -54,17 +65,17 @@ namespace CuckooFilter
         public bool Lookup(byte[] item)
         {
             var hashedItem = ComputeHash(item);
-            var fingerprint = Fingerprint(hashedItem);
+            var fingerprint = ExtractFingerprint(hashedItem);
             var i = GetIndex(hashedItem);
             var j = GetAlternateIndex(i, fingerprint);
 
             return _buckets[i].Lookup(fingerprint) || _buckets[j].Lookup(fingerprint);
         }
 
-        public bool Delete(byte[] item)
+        public bool Remove(byte[] item)
         {
             var hashedItem = ComputeHash(item);
-            var fingerprint = Fingerprint(hashedItem);
+            var fingerprint = ExtractFingerprint(hashedItem);
             var i = GetIndex(hashedItem);
             var j = GetAlternateIndex(i, fingerprint);
 
@@ -77,8 +88,11 @@ namespace CuckooFilter
             return false;
         }
 
-        private byte[] Fingerprint(byte[] hashedItem)
+        private byte[] ExtractFingerprint(byte[] hashedItem)
         {
+            // We could go with Array.Copy() or Buffer.BlockCopy()
+            // but I don't see any performance improvement since
+            // we are operating on small byte arrays.
             var fingerprint = new byte[_fingerprintSize];
 
             for (int i = 0; i < _fingerprintSize; i++)
@@ -89,7 +103,7 @@ namespace CuckooFilter
 
         private byte[] ComputeHash(byte[] item)
         {
-            return _hashFunction.ComputeHash(item);
+            return _hashAlgorithm.ComputeHash(item);
         }
 
         private uint GetIndex(byte[] hashedItem)

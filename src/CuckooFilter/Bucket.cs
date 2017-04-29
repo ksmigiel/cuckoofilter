@@ -5,10 +5,10 @@ namespace CuckooFilter
 {
     public class Bucket
     {
-        private readonly int _capacity;
+        private readonly uint _capacity;
         private readonly byte[][] _slots;
 
-        public Bucket(int capacity)
+        public Bucket(uint capacity)
         {
             _capacity = capacity;
             _slots = new byte[_capacity][];
@@ -56,7 +56,7 @@ namespace CuckooFilter
 
         public byte[] Swap(byte[] fingerprint)
         {
-            var i = new Random().Next(_capacity);
+            var i = new Random().Next((int)_capacity);
             (_slots[i], fingerprint) = (fingerprint, _slots[i]);
             
             return fingerprint;

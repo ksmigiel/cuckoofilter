@@ -9,9 +9,9 @@ namespace CuckooFilter
             var cuckooFilter = new CuckooFilter();
             var item = new byte[] { 0, 255 };
 
-            cuckooFilter.Add(item);
+            cuckooFilter.Insert(item);
 
-            var deleted = cuckooFilter.Delete(new byte[] { 0, 255 });
+            var deleted = cuckooFilter.Remove(new byte[] { 0, 255 });
             var found = cuckooFilter.Lookup(new byte[] { 0, 255 });
 
         }
