@@ -9,13 +9,13 @@ namespace CuckooFilter
         private uint _bucketCapacity;
         private uint _fingerprintSize;
         private uint _maximumKicks;
-        private HashAlgorithm _hashAlgorithm;
+        private Func<HashAlgorithm> _hashAlgorithm;
 
         private const uint DEFAULT_FILTER_SIZE = (1 << 18) / 4;
         private const uint DEFAULT_BUCKET_CAPACITY = 4;
         private const uint DEFAULT_FINGERPRuint_SIZE = 3;
         private const uint DEFAULT_MAXIMUM_KICKS = 500;
-        private readonly HashAlgorithm DEFAULT_HASH_ALGORITHM = SHA1.Create();
+        private static readonly Func<HashAlgorithm> DEFAULT_HASH_ALGORITHM = () => SHA1.Create();
 
         public uint FilterSize
         {
@@ -65,7 +65,7 @@ namespace CuckooFilter
             }
         }
 
-        public HashAlgorithm HashAlgorithm
+        public Func<HashAlgorithm> HashAlgorithm
         {
             get
             {

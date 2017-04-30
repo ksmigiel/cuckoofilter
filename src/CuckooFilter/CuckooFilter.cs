@@ -12,7 +12,7 @@ namespace CuckooFilter
         private readonly uint _kicks;
         private uint _count;
         private readonly Bucket[] _buckets;
-        private readonly HashAlgorithm _hashAlgorithm;
+        private readonly Func<HashAlgorithm> _hashAlgorithm;
 
         public CuckooFilter() : this(new CuckooFilterOptions())
         {
@@ -103,7 +103,10 @@ namespace CuckooFilter
 
         private byte[] ComputeHash(byte[] item)
         {
-            return _hashAlgorithm.ComputeHash(item);
+            using (var hashAlgorithm = _hashAlgorithm())
+            {
+                return hashAlgorithm.ComputeHash(item);
+            }
         }
 
         private uint GetIndex(byte[] hashedItem)
