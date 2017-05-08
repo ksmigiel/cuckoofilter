@@ -13,7 +13,7 @@ namespace CuckooFilter
 
         private const uint DEFAULT_FILTER_SIZE = (1 << 18) / 4;
         private const uint DEFAULT_BUCKET_CAPACITY = 4;
-        private const uint DEFAULT_FINGERPRuint_SIZE = 3;
+        private const uint DEFAULT_FINGERPRINT_SIZE = 3;
         private const uint DEFAULT_MAXIMUM_KICKS = 500;
         private static readonly Func<HashAlgorithm> DEFAULT_HASH_ALGORITHM = () => SHA1.Create();
 
@@ -45,7 +45,7 @@ namespace CuckooFilter
         {
             get
             {
-                return _fingerprintSize == 0 ? DEFAULT_FINGERPRuint_SIZE : _fingerprintSize;
+                return _fingerprintSize == 0 ? DEFAULT_FINGERPRINT_SIZE : _fingerprintSize;
             }
             set
             {
