@@ -11,6 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7C9AD871-C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuckooFilter.Tests", "test\CuckooFilter.Tests\CuckooFilter.Tests.csproj", "{444CE1D4-A1D3-4EB5-B3DF-CFEEC1C0DCA9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmark", "benchmark", "{DC5DCBCE-6889-4353-9FD9-28FCFE5972EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CuckooFilter.Benchmark", "benchmark\CuckooFilter.Benchmark\CuckooFilter.Benchmark.csproj", "{77599C2D-BABC-492F-98BC-D82DD8CAABD7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,9 +52,22 @@ Global
 		{444CE1D4-A1D3-4EB5-B3DF-CFEEC1C0DCA9}.Release|x64.Build.0 = Release|x64
 		{444CE1D4-A1D3-4EB5-B3DF-CFEEC1C0DCA9}.Release|x86.ActiveCfg = Release|x86
 		{444CE1D4-A1D3-4EB5-B3DF-CFEEC1C0DCA9}.Release|x86.Build.0 = Release|x86
+		{77599C2D-BABC-492F-98BC-D82DD8CAABD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77599C2D-BABC-492F-98BC-D82DD8CAABD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77599C2D-BABC-492F-98BC-D82DD8CAABD7}.Debug|x64.ActiveCfg = Debug|x64
+		{77599C2D-BABC-492F-98BC-D82DD8CAABD7}.Debug|x64.Build.0 = Debug|x64
+		{77599C2D-BABC-492F-98BC-D82DD8CAABD7}.Debug|x86.ActiveCfg = Debug|x86
+		{77599C2D-BABC-492F-98BC-D82DD8CAABD7}.Debug|x86.Build.0 = Debug|x86
+		{77599C2D-BABC-492F-98BC-D82DD8CAABD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77599C2D-BABC-492F-98BC-D82DD8CAABD7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77599C2D-BABC-492F-98BC-D82DD8CAABD7}.Release|x64.ActiveCfg = Release|x64
+		{77599C2D-BABC-492F-98BC-D82DD8CAABD7}.Release|x64.Build.0 = Release|x64
+		{77599C2D-BABC-492F-98BC-D82DD8CAABD7}.Release|x86.ActiveCfg = Release|x86
+		{77599C2D-BABC-492F-98BC-D82DD8CAABD7}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0CBC8B3E-5656-4DF3-90FC-AB4413214F61} = {DEEC4475-FDE2-4F7A-8A1A-978B0E6B9FBE}
 		{444CE1D4-A1D3-4EB5-B3DF-CFEEC1C0DCA9} = {7C9AD871-C682-4565-AF82-12C1386B6AD6}
+		{77599C2D-BABC-492F-98BC-D82DD8CAABD7} = {DC5DCBCE-6889-4353-9FD9-28FCFE5972EA}
 	EndGlobalSection
 EndGlobal

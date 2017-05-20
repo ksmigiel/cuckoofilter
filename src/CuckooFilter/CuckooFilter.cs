@@ -6,13 +6,13 @@ namespace CuckooFilter
 {
     public class CuckooFilter
     {
+        private  uint _count;
         private readonly uint _bucketCapacity;
         private readonly uint _fingerprintSize;
         private readonly uint _filterSize;
         private readonly uint _kicks;
-        private uint _count;
         private readonly Bucket[] _buckets;
-        private readonly Func<HashAlgorithm> _hashAlgorithm;
+        private readonly Func<HashAlgorithm> _hashAlgorithmFactory;
 
         public CuckooFilter() : this(new CuckooFilterOptions())
         {
@@ -24,7 +24,7 @@ namespace CuckooFilter
             _fingerprintSize = options.FingerprintSize;
             _filterSize = options.FilterSize;
             _kicks = options.MaximumKicks;
-            _hashAlgorithm = options.HashAlgorithm;
+            _hashAlgorithmFactory = options.HashAlgorithmFactory;
 
             _buckets = new Bucket[_filterSize];
 
@@ -103,7 +103,7 @@ namespace CuckooFilter
 
         private byte[] ComputeHash(byte[] item)
         {
-            using (var hashAlgorithm = _hashAlgorithm())
+            using (var hashAlgorithm = _hashAlgorithmFactory())
             {
                 return hashAlgorithm.ComputeHash(item);
             }
@@ -113,7 +113,7 @@ namespace CuckooFilter
         {
             // TODO Get working more than 32 bits hashes
             // TODO What with int overflow?
-            return BitConverter.ToUInt32(hashedItem, 0) % (uint)_filterSize;
+            return BitConverter.ToUInt32(hashedItem, 0) % _filterSize;
         }
 
         private uint GetAlternateIndex(uint index, byte[] fingerprint)
